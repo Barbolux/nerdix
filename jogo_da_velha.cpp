@@ -11,9 +11,12 @@ Professor. Puca
  */
 /*INDICE.
  - Anotações, instruções, convenções e padrões para compreender melhor o codigo deste jogo.
+***HELP****
+* Jogador Zero é bola e jogador Um é xis!
 nomes de variaveis globais da função:
 * 0 - variavel do tipo player que representa o jogador 1.
 * 1 - variavel do tipo player que representa o jogador 2.
+* roda - variavel local dentro do loop for, de valor 0 a 8 que registra qual é rodada.
 * Convenções do jogo. vetores de posição vão representar:
 * (quando armazenado em vetores lineares. sera que era melhor um vetor 2x2?
 * 0 = Norte, a direção ao alto da tela. CIMA.
@@ -37,9 +40,10 @@ struct player{//o jogador. durante a função main do programa será declarados 
 	
 }
 struct casa{//o espaço quadrado onde será marcado seu simbolo.
-	bool ativado=false; //quando a casa é escolhida pelo jogador, ele vai ativar marcando seu simbolo sobre ela.
-	vizinho entorno[2][2][2]; //
-	int id[3][3]; //identificação (localização na avenida)
+	bool ativado=false; //indica se a casa está vazia ou ocupada.
+	vizinho entorno[2][2][2]; //matriz 3d o tipo de struct vizinho mostrando as 8 posições entorno.
+	int id; //identificação numerica linear 1 a 9.
+	int ad[3][3]; //identificação por matriz (localização na avenida)
 }
 struct vizinho{//mostra os vizinhos ocupados ou vazios em relação a uma casa marcada.
 	casa lado[4]//os quatro lados. 0norte, 1leste, 2sul, 3oeste.
@@ -61,35 +65,38 @@ struct tabuleiro{//Lê as informações do tabuleiro para dar dicas ao jogador.
 	linha hori;
 	linha diag;
 }
-struct GOL{//estrutura de pontuação do jogo da velha.
+struct GOL{//estrutura de pontuação do jogo da velha que vai de zero a dois.
 	bool zero=true;
 	bool um=false;
 	bool dois=false;
-	int total=0;
+	bool velha=false; //em caso de linha preenchida 2a1(empate, velha)
+	int total=0; //total de pontos que se chegar a dois significa vitoria.
 };
 //cabeçalhos das funções:
+void iniciar(); //incompleto. Função que apaga tudo que estiver no lixo e cria o novo jogo.
 int turno(); //incompleto. Monta o vetor TABULEIRO com base nas informações anteriores.
 int jogar(); //incompleto. Jogada do Jogador.
 int toctoc(); //incompleto. função que atualiza informação de todos os vizinhos. 
 int pontuar(); //incompleto. Computa os pontos das structs GOL.
-int qt();//função para enviar ao mostrador grafico. 
-void imprimir(); //incompleto
+int qt();//função que envia para a interface grafica.
+void imprimir(); //incompleto.
 void select_player(); //incompleto
 bool vitoria(); //incompleto
-int main{ //MAIN MAIN MAIN MAIN MAIN
+bool XO(int); //incompleto. função que alterna entre os dois jogadores.
+void fim(); //função chamada quando o jogo termina.
+int main{ //MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN
 	player 0, 1;
 	cout << "Bem Vindo ao Jogo da Velha Nerdix" << endl;
 	//Selecionar jogador e modo dejogo
 	select_player();
 	//Jogo começa nas linhas a seguir... Quem será o vencedor da disputa??
-	for (int i=0, i<9, i++)
-		{
-		turno(i);
-		jogada(i);
-		pontuar(i);
-		imprimir(i);
-		qt(i);
-		if (vitoria==true){cout << "O jogador" << player.name << "venceu" << endl;}
+	for (int roda=0, roda<9, roda++){ //a variavel local roda significa cada rodada.		
+		XO(roda);
+		turno(roda);
+		jogada(roda);
+		pontuar(roda);
+		imprimir(roda);
+		if (vitoria==true){break; fim();}//se a função vitoria se tornar true, da um break no loop e chama função "fim".
 		}
 
 return 0;
@@ -100,57 +107,57 @@ int turno(){//Descreve os turnos.
 
 	if(flag.player.human==true){//jogadas do jogador humano.
 
-	switch
+	switch(roda)
 	case 0{}//primeira jogada. cria um vetor com 9 posições.
 	//Tabuleiro em branco com 9 espaços livres.
 	//Pode ser marcadas as posições: pares, impares ou centro.
-	break
+	break;
 	case 1{}
 	//Tabuleiro com 8 espaços livres.
-	break
+	break;
 	case 2{}
 	//Tabuleiro com 7 espaços livres.
-	break
+	break;
 	case 3{}
 	//Tabuleiro com 6 espaços livres.
-	break
+	break;
 	case 4{}
 	//Tabuleiro com 5 espaços livres.
-	break
+	break;
 	case 5{}
 	//Tabuleiro com 4 espaços livres.
-	break
+	break;
 	case 6{}
 	//Tabuleiro com 3 espaços livres.
-	break
+	break;
 	case 7{}
 	//Tabuleiro com 2 espaços livres.
-	break
+	break;
 	case 8{}
 	//Tabuleiro com 1 espaço livre.
-	break};
+	break;
 	
 
 	if(flag.player.human==false){//Jogadas do computador."Inteligência Artificial"
 	switch
 	case 0{}
-	break
+	break;
 	case 1{}
-	break
+	break;
 	case 2{}
-	break
+	break;
 	case 3{}
-	break
+	break;
 	case 4{}
-	break
+	break;
 	case 5{}
-	break
+	break;
 	case 6{}
-	break
+	break;
 	case 7{}
-	break
+	break;
 	case 8{}
-	break
+	break;
 	};
 }
 
@@ -161,7 +168,8 @@ vitoria()//ao fim do turno ele analiza a condição de jogada.
  
  
 int jogar(){//incompleto
-	if switch case 
+	cout << "Digite qual número quer jogar. ";
+	cin >> 
 }; 
 	
 int pontuar(); //incompleto
@@ -181,37 +189,23 @@ void select_player{ //escrita mas, não testada. função para selecionar jogado
 bool vitoria(){
 	if (GOL.dois==true)
 	return true};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+bool XO(int roda){ //nao testada.
+	if(roda % 2 == 0) //rodada par pertence ao jogador X (xis)
+	return true;
+	if(roda % 2 == 1) //rodada impar pertence ao jogador O (bola)
+	return false;
+}
 
 //COMENTARIOS FINAIS E EXPLICACOES DO JOGO.
-
-
-
-/* Existem 8 resultados que significam vitoria.
+/* Estudando as condições de vitoria...
+ * 
+ * Existem 8 resultados que significam vitoria.
  * 1+2+3,
  * 4+5+6,
  * 7+8+9.
  * 1+5+9,
  * 3+5+7;
-
+	...
 
 
 /* Grade do Jogo da Velha
@@ -248,12 +242,7 @@ bool vitoria(){
  * 5;
  * 8;
  * /
-
-}
-bool vitoria{
-* if (xadrez[3][3])
+* matriz(xadrez[3][3])
 * i0j0, i0j1, i0j2
 * i1j0, i1j1, i1j2
 * i2j0, i2j1, i2j2
-* 
-* 
