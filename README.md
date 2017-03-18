@@ -11,6 +11,6 @@ Para baixar o código fonte clique abaixo:
 https://github.com/Barbolux/nerdix/blob/master/jogo_da_velha.cpp //parte escrita pelo Stefano
 
 
-https://github.com/Barbolux/nerdix/blob/master/tp1_renato.cpp //parte escrita pelo Renato
+https://github.com/Barbolux/nerdix/blob/master/tp1_renato_original.cpp //parte escrita pelo Renato
 
 A ideia é juntar estas partes numa só!
