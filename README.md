@@ -1,9 +1,10 @@
 # nerdix
 Este repositório foi criado para guardar o videogame NERDIX, o jogo da velha mais nerd do mundo.
+
 Autores: Hugo, Renato e Stefano.
 
-## ESTE CODIGO ENCONTRA-SE NA VERSÃO 0.1
-sexta/17/março_2017
+## ESTE CODIGO ENCONTRA-SE NA VERSÃO 0.2
+sabado/18/março_2017
 
 Para baixar o código fonte clique abaixo:
 
