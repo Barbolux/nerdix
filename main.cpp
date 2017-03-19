@@ -22,7 +22,7 @@ int main (int argc, char *argv[]){
    myrec *rect = new myrect();
    rect->setRect(0,0,100,100);
    cena->addItem(rect);
-                                    //foco nos objetos
+                                    //foco nos objetos >>>>>>>>>> Daqui pra baixo ta comentado pra fazer teste. mas se tirar o comentario apareceem os retangulos
    rect->setFlag(QGraphicsItem::ItemIsFocusable);//FOCO de acao
    rect->setFocus();//permite receber o evento
 
