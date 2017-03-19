@@ -1,5 +1,11 @@
 //MUDANÇAS DA VERSÃO 0.3.1: a escolha de jogador agora coloca dados numa struct.
 //MUDANÇAS DA VERSÃO 0.3.2: interface grafica mostra opções ainda disponíves.
+//PROBLEMA> no enunciado do TP solicita-se "Não utilize variáveis globais no programa."
+//"Faça funções para marcar a posicao  selecionado  pelos jogadores
+// e tambem para efetuar todas as operacoes e verificacoes necessarias.
+// Pode-se utilizar passagem de parametros por valor ou referência nas funcoes.
+// Uai, como que faz isso??? Imagino que é com um monte de ponteiros :'(
+
 /*BCC201 - TP1 - Semestre 2016.2
 Trabalho prático JOGO DA VELHA.
 UFOP - Universidade Federal de Ouro Preto.
@@ -13,7 +19,7 @@ Professor. Puca
 
 #include <iostream>
 #include <stdio.h>
-#include <string>
+#include <cstdlib>
 using namespace std;
 
 //structs utilizadas no programa.
@@ -22,7 +28,7 @@ struct player{// estrutura que contém os dados de cada jogador.
 	bool human; //quando false o jogador se comporta como robô.
 	char simbolo; //permite você substituir o X e O por qualquer char do teclado.
 //	int round=1; //registra quantas vezes ele jogou.
-//	int score=0; //pontuação total deste jogador.
+	int score=0; //pontuação total deste jogador.
 };
 
 //funções utilizadas no programa.
@@ -37,17 +43,17 @@ void placar(); //
 void teclado(char); //função que recebe o valor do teclado e reverte em duas posições da matriz.
 //void escolha_jogador(); // colocado no main, mas queria devolver isso à condição de função quando descobrir como.
 
-//declaração de variáveis globais:
+//declaração de variáveis globais: //QUE DEVEM SER ELIMINADAS! :'( 
 	player X, O;
 	char M[3][3], tecla;
-	int m_linha, m_coluna, jogada=0, turno=1, v1=0, v2=0;
+	int m_linha, m_coluna, jogada=0, turno=1;
 	bool certo=false, fim=false, ganhou=false;
 
 int main(){ // MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN!
 	cout << endl;
-	cout << "Bem vindo ao jogo NERDIX, o jogo-da-velha mais nerd do mundo!\n";
+	cout << "Bem vindo ao NERDIX, o jogo-da-velha mais nerd do mundo!\n";
 	cout << endl;
-	cout << "Primeiro vamos definir que são os jogadores.\n";
+	cout << "Primeiro vamos definir que são os jogadores...\n";
 	cout << endl;
 	
 	//a escolha do jogador será colocada no main agora. Depois vamos entender como ela pode voltar a ser uma função.
@@ -108,8 +114,8 @@ int main(){ // MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN!
 	
 	cout << "Vamos brincar um pouquinho?\n";
 	jogo_da_velha();
-	replay();
 	placar();
+	replay();
 	cout << "\nObrigado por jogar. TCHAU! :-)";
 	return 0;
 }
@@ -124,9 +130,9 @@ void tabuleiro(){
 }
 void imprimir(){
 	cout << endl;
-	cout << "___________________________\n";
-	cout << "N E R D I X   |   (Opções:)"<< endl;
-	cout << "E "<< M[0][0] << " | "<< M[0][1] << " | "<< M[0][2] << "   |   (";
+	cout << ".______________________________.\n";
+	cout << "| N E R D I X   |   (Opções:)  |"<< endl;
+	cout << "| E "<< M[0][0] << " | "<< M[0][1] << " | "<< M[0][2] << "   |   (";
 	if(M[0][0]==' '){cout<<"1";}
 	else{cout<<" ";}
 	cout << "  ";
@@ -135,9 +141,9 @@ void imprimir(){
 	cout << "  ";
 	if(M[0][2]==' '){cout<<"3";}
 	else{cout<<" ";}
-	cout << ")"<<endl;
-	cout << "R --|---|--   |   (       )"<< endl;
-	cout << "D "<< M[1][0] << " | "<< M[1][1] << " | "<< M[1][2] << "   |   (";
+	cout << ")  |"<<endl;
+	cout << "| R --|---|--   |   (       )  |"<< endl;
+	cout << "| D "<< M[1][0] << " | "<< M[1][1] << " | "<< M[1][2] << "   |   (";
 	if(M[1][0]==' '){cout<<"4";}
 	else{cout<<" ";}
 	cout << "  ";
@@ -146,9 +152,9 @@ void imprimir(){
 	cout << "  ";
 	if(M[1][2]==' '){cout<<"6";}
 	else{cout<<" ";}
-	cout << ")"<<endl;
-	cout << "I --|---|--   |   (       )"<< endl;
-	cout << "X "<< M[2][0] << " | "<< M[2][1] << " | "<< M[2][2] << "   |   (";
+	cout << ")  |"<<endl;
+	cout << "| I --|---|--   |   (       )  |"<< endl;
+	cout << "| X "<< M[2][0] << " | "<< M[2][1] << " | "<< M[2][2] << "   |   (";
 	if(M[2][0]==' '){cout<<"7";}
 	else{cout<<" ";}
 	cout << "  ";
@@ -157,8 +163,8 @@ void imprimir(){
 	cout << "  ";
 	if(M[2][2]==' '){cout<<"9";}
 	else{cout<<" ";}
-	cout << ")"<<endl;
-	cout << "______________|____________\n";
+	cout << ")  |"<<endl;
+	cout << "|_______________|______________|\n";
 }
 
 void jogar_humano(){
@@ -169,7 +175,7 @@ void jogar_humano(){
 		if (fim==false){
 			if (turno==1){
 				while (certo == false){
-					cout << "Para jogar use as ^^^ teclas acima.\n(Turno do primeiro jogador)";
+					cout << "Para jogar use as teclas^^^ acima.\n(Turno do primeiro jogador)";
 					cin >> tecla;
 					teclado(tecla);
 					if (M[m_linha][m_coluna]==' '){
@@ -214,12 +220,12 @@ void jogar_humano(){
 	}
 	if (ganhou==true){
 		if(turno==1){
-			cout << "Parabens o jogador 2 ganhou! "<< endl;
-			v2++;
+			cout << "Parabens o jogador "<<O.name<<" ganhou! "<< endl;
+			O.score++;
 		}
 		else if (turno==2){
-			cout << "Parabens o jogador 1 ganhou! "<< endl;
-			v1++;
+			cout << "Parabens o jogador "<<X.name<<" ganhou! "<< endl;
+			X.score++;
 		}
 	}
 	
@@ -313,7 +319,6 @@ void jogo_da_velha(){
 		jogada++;
 		//verificar_ganhador();
 	}
-	replay();
 }
 void replay(){
 	char novo;
@@ -326,8 +331,8 @@ void replay(){
 }
 void placar(){
 	cout << endl;
-	cout << "PONTUACAO:"<< endl;
-	cout << "O jogador1 obteve " << v1 << " vitoria(s). "<< endl;
-cout << "O jogador2 obteve " << v2 << " vitoria(s). "<< endl;
+	cout << "PONTUAÇÃO:"<< endl;
+	cout << "1: O jogador " << X.name << " obteve " << X.score << " vitória(s). "<< endl;
+	cout << "2: O jogador " << O.name << " obteve " << O.score << " vitória(s). "<< endl;
 }
 //void escolha_jogador(){} depreciada, por enquanto...
