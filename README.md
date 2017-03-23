@@ -8,3 +8,6 @@ sabado/18/março_2017
 
 Para baixar o código fonte clique abaixo:
 https://github.com/Barbolux/nerdix/blob/master/nerdix.cpp
+
+
+Boa referência para estudar ponteiros: http://www.tiexpert.net/programacao/c/ponteiros.php
