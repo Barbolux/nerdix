@@ -14,7 +14,7 @@ DECOM - Departamento de Computação.
 Professor. Puca
 *** Programadores ***
 	* Stefano Nogueira de Azevedo. n_16.1.5969
-	* Hugo Zvanini. n_
+	* Hugo Zvanini. n_16.2.5849
 	* Renato Tavares Goia. n_16.1.9999
 */
 
