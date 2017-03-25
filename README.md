@@ -1,13 +1,15 @@
 # nerdix
-Este repositório foi criado para o videogame NERDIX, o jogo-da-velha mais nerd do mundo.
+Repositório do videogame brasileiro NERDIX, "O jogo-da-velha mais nerd do mundo"!
 
-Autores: Hugo, Renato e Stefano. Alunos da UFOP - Universidade Federal de Ouro Preto (DECOM - Departamento de computação.)
+Autores: Hugo, Renato e Stefano.
 
-## ESTE CÓDIGO ENCONTRA-SE NA VERSÃO 0.3 (beta)
-sabado/18/março_2017
+Alunos da UFOP - Universidade Federal de Ouro Preto (DECOM - Departamento de computação.)
+
+## ESTE CÓDIGO ENCONTRA-SE NA VERSÃO 0.4 (beta)
+sábado/25 de março/2017
 
 Para baixar o código fonte clique abaixo:
-https://github.com/Barbolux/nerdix/blob/master/nerdix.cpp
+https://github.com/Barbolux/nerdix/blob/master/nerdix0.4.0.cpp
 
-
+### Está em dúvida com os ponteiros?
 Boa referência para estudar ponteiros: http://www.tiexpert.net/programacao/c/ponteiros.php
