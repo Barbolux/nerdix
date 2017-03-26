@@ -1,3 +1,4 @@
+//tentativa de implementar funçao ALTERNAR.
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
