@@ -1,3 +1,9 @@
+//A única coisa colorida neste código, é a palavra NERDIX em vermelho
+//é encontrado na função void intro();
+//para pesquisar a respeito, isso chama ANSI ESCAPE CODES.
+//é uma sequencia de códigos que deve começar com [033
+//tipo assim [033/valor1;valor2;valor3...valorxm TEXTOCOLORIDO ENTRA AQUI \033[0m
+//pesquisa que vc vai fragar
 #include <iostream>
 #include <ctime>//lib_rand
 #include <cstdlib>
