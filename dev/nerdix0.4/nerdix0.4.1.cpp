@@ -226,7 +226,7 @@ void teclado(char tecla, game *nerd){
 }
 void intro(){
 cout << "	._______________.\n";
-cout << "	| \033[1;31mN E R D I X\033[0m   |\n";
+cout << "	| N E R D I X   |\n";
 cout << "	| E   |   |     |\n";
 cout << "	| R --|---|--   |\n";
 cout << "	| D   |   |     |\n";
