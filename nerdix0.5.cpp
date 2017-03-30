@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>//biblioteca padrao
 #include <cstdlib>
 #include <ctime>
 #include <locale.h>
