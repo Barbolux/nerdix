@@ -8,7 +8,7 @@ Alunos da UFOP - Universidade Federal de Ouro Preto (DECOM - Departamento de com
 
 ## ESTE CÓDIGO ENCONTRA-SE NA VERSÃO 0.5 (beta)
 Para baixar o código fonte clique abaixo:
-https://github.com/Barbolux/nerdix/blob/master/nerdix0.5/nerdix0.5.0.cpp
+https://github.com/Barbolux/nerdix/blob/nerdix0.5.cpp
 
 
 
