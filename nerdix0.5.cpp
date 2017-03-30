@@ -1,4 +1,3 @@
-//TESTE DO FORK!
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -358,7 +357,6 @@ void imprimir(game *nerd){
 	cout << "|_______________|______________|\n";}
 }
 void verificar_ganhador(game *nerd){
-	//horizontal
 	if ((nerd->M[0][0]==nerd->M[0][1])&& (nerd->M[0][1]==nerd->M[0][2]) && (nerd->M[0][0]!=' ')){
 		nerd->vitoria=true;}
 	if ((nerd->M[1][0]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[1][2]) && (nerd->M[1][0]!=' ')){
@@ -366,7 +364,6 @@ void verificar_ganhador(game *nerd){
 	if ((nerd->M[2][0]==nerd->M[2][1])&& (nerd->M[2][1]==nerd->M[2][2]) && (nerd->M[2][0]!=' ')){
 		nerd->vitoria=true;}
 	
-	//vertical
 	if ((nerd->M[0][0]==nerd->M[1][0])&& (nerd->M[1][0]==nerd->M[2][0]) && (nerd->M[0][0]!=' ')){
 		nerd->vitoria=true;}
 	if ((nerd->M[0][1]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[2][1]) && (nerd->M[0][1]!=' ')){
@@ -374,15 +371,11 @@ void verificar_ganhador(game *nerd){
 	if ((nerd->M[0][2]==nerd->M[1][2])&& (nerd->M[1][2]==nerd->M[2][2]) && (nerd->M[0][2]!=' ')){
 		nerd->vitoria=true;}
 	
-	//diagonal
 	if ((nerd->M[0][0]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[2][2]) && (nerd->M[0][0]!=' ')){
 		nerd->vitoria=true;}
 	if ((nerd->M[0][2]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[2][0]) && (nerd->M[0][2]!=' ')){
 		nerd->vitoria=true;}
-	
-	//VERIFICAÇÃO DA VELHA (não implementada)
-	//nerd->VELHA=true;
-	//nerd->velha++;
+
 }
 void placar(player *X, player *O, game *nerd){
 	cout << endl;
@@ -420,35 +413,3 @@ cout << "	| Huachi|   | Preto |\n";
 cout << "	|_______|___|_______|\n";
 }
 void apagar(){cout << string( 100, '\n' );}
-//NERDIX 0.5.0 beta
-//DATA: 29/03/2017
-//TP1.2016.2, BCC201 - UFOP
-/*Universidade Federal de Ouro Preto, 2017.
- *Trabalho Prático JOGO DA VELHA
- **Professor Puca Huachi**
- **DECOM [Departamento de Computação]
-	*** Programadores ***               Matrícula:
-	* Hugo Zvanini. 					n_16.2.5849
-	* Renato Tavares Goia. 				n_16.1.9999
-	* Stefano Nogueira de Azevedo. 		n_16.1.5969
-////LICENÇA:
-////Este programa está licenciado como livre, gratuíto, de código aberto.
-////Caso deseje fazer alguma contribuição ao código, fique à vontade.
-////http://www.github.com/Barbolux/nerdix
-
-* Informações sobre a versão *
-
-Bugs encontrados:
-- Na função definir_jogadores, se apertar ENTER direto quando pede para
-receber um char, ele vai receber a primeira letra do string seguinte(letra)
-ao invés de atribuir o padrão X ou O.
-(Este bug acima já foi encontrado pelo Puca!)
-
-FALTA IMPLEMENTAR:
-*** Verificação da velha dentro da função "Verificar Ganhador";
-*** ROBO continua burrão e nem ao menos entra no loop onde jogaria numa casa random.
-*
-
-"Em caso de dúvidas no código, verifique o código da versão 0.4.3"
- 
-*/
