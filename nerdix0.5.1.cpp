@@ -1,5 +1,5 @@
-//um ROBOZINHO mucho loko... não funciona direito não.
-#include <iostream>
+
+#include <iostream>//um ROBOZINHO mucho loko... não funciona direito não.
 #include <cstdlib>
 #include <ctime>
 #include <clocale>
