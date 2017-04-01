@@ -1,7 +1,8 @@
+//um ROBOZINHO mucho loko... não funciona direito não.
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <locale.h>
+#include <clocale>
 using namespace std;
 struct player{
 	string name;
@@ -11,19 +12,18 @@ struct player{
 };
 struct game{
 	char M[3][3];
-	int linha, coluna, velha, roda, turno, partida;
+	int velha, roda, turno, partida;
 	bool vitoria, VELHA;
 };
-
 void intro();
 void apagar();
-void definir_jogadores(player*, player*);
-void verificar_ganhador(game*);
 void imprimir(game*);
-void teclado(char, game*);
+void definir_jogadores(player*, player*);
+void jogo_da_velha(player*, player*, game*);
+void verificar_ganhador(game*);
+void teclado(player*, game*);
 void JOGAR(player*, game*);
 void ROBO(player*, game*);
-void jogo_da_velha(player*, player*, game*);
 void placar(player*, player*, game*);
 void replay(player *, player *, game*);
 	
@@ -35,23 +35,25 @@ int main(){
 	O.round=1;
 	X.score=0;
 	O.score=0;
-	X.draw=0;
-	O.draw=0;
 	nerd.velha=0;
 	nerd.roda=1;
 	nerd.turno=1;
 	nerd.partida=1;
 	intro();
+	//ranking();
 	cout << "\nBem vindo ao NERDIX, o jogo-da-velha mais nerd do mundo!\n";
 	definir_jogadores(&X, &O);
 	cout << "Vamos brincar um pouquinho?\n";
 	jogo_da_velha(&X, &O, &nerd);
 	replay(&X, &O, &nerd);
 	cout << "\nTCHAU! :-)";
-	cout << "***Software desenvolvido por: barbolux && reymc && hugozvanini\n";
+	cout << "***Software desenvolvido por: barbolux && reymc && hugotones\n";
 	cout << "***Versão 0.5 beta \n";
 	cout << "***Atualizado: 29/03/2017 \n";
 	cout << "\nVolte sempre para incrementar seus RECORDES! :-)";
+	X.draw=nerd.velha;
+	O.draw=nerd.velha;
+	//recordes();
 	return 0;
 }
 void jogo_da_velha(player *X, player *O, game *nerd){
@@ -62,7 +64,7 @@ void jogo_da_velha(player *X, player *O, game *nerd){
 	nerd->vitoria=false;
 	nerd->VELHA=false;
 	for (int i=0; i<3; i++){
-		for (int j=0; j<3; j++){nerd->M[i][j]= ' ';}}
+		for (int j=0; j<3; j++){nerd->M[i][j]=' ';}}
 	if (X->human==false && O->human==false){
 	cout << "O computador venceu de si mesmo 100000 vezes em um segundo!\n";
 	srand(time(NULL));
@@ -82,122 +84,154 @@ void jogo_da_velha(player *X, player *O, game *nerd){
 	placar(X,O,nerd);
 }
 void JOGAR(player *p, game *nerd){
+if(nerd->VELHA==true)cout << "A VELHA ganhou :-P";
 if(p->human==true){
 	cout << "Para jogar usa as teclas^^^ acima.\n";
 	cout << "Vez de " << p->name <<"("<<p->simbolo<<") jogar. " << p->round <<"o Turno."<<endl;
-	bool certo=false;
-	while (certo==false)
-	{
-		char tecla;
-		cin >> tecla;
-		teclado(tecla, nerd);
-		if(nerd->M[nerd->linha][nerd->coluna]==' '){
-			nerd->M[nerd->linha][nerd->coluna]=p->simbolo;
-			p->round++;
-			nerd->turno++;
-			nerd->roda++;
-			apagar();
-			imprimir(nerd);
-			verificar_ganhador(nerd);
-			certo=true;
-			}
-		else {cout << "Jogada inválida! ";}
-	}
-}
-if(p->human==false){
-cout << "Computador pensa...Robozinho em fase de testes :-/";
-cout << "Vez de " << p->name <<"("<<p->simbolo<<") jogar. " << p->round <<"o Turno."<<endl;
-ROBO(p, nerd);
-}
-if(nerd->vitoria==true){
-cout << "Parabéns! "<<p->name<<" ganhou! "<< endl;
-p->score++;}
-if (nerd->vitoria==false && nerd->turno > 9){
-	cout << "A VELHA ganhou :-P";
-	nerd->velha++;
-}
-}
-
-void ROBO(player *r, game *nerd){
-srand(time(NULL));
-char tecla;
-bool certo=false;
-cout << "Vez de " << r->name <<"("<<r->simbolo<<") jogar. " << r->round <<"o Turno."<<endl;
-	while (certo==false){
-		cout << "Robô pensa sua jogada...\n";
-		for (int i=0; i<3; i++){
-			if      ((nerd->M[i][0]==nerd->M[i][1])&&(nerd->M[i][0]!=' ')&&(certo==false)){nerd->M[i][2]=r->simbolo; certo=true;}
-			else if ((nerd->M[i][1]==nerd->M[i][2])&&(nerd->M[i][1]!=' ')&&(certo==false)){nerd->M[i][0]=r->simbolo; certo=true;}
-			else if ((nerd->M[i][0]==nerd->M[i][2])&&(nerd->M[i][0]!=' ')&&(certo==false)){nerd->M[i][1]=r->simbolo; certo=true;}
-			else if ((nerd->M[0][i]==nerd->M[1][i])&&(nerd->M[0][i]!=' ')&&(certo==false)){nerd->M[2][i]=r->simbolo; certo=true;}
-			else if ((nerd->M[1][i]==nerd->M[2][i])&&(nerd->M[1][i]!=' ')&&(certo==false)){nerd->M[0][i]=r->simbolo; certo=true;}
-			else if ((nerd->M[0][i]==nerd->M[2][i])&&(nerd->M[0][i]!=' ')&&(certo==false)){nerd->M[1][i]=r->simbolo; certo=true;}
-			}
-		while (certo==false){
-			cout << "Debug, você vê esta mensagem? Pelo visto não né :-(";
-			tecla = (rand()%9+49);
-				cout << "... Ele pensa jogar na" << tecla <<endl;
-				teclado((char) tecla, nerd);
-				if(nerd->M[nerd->linha][nerd->coluna]==' '){
-					nerd->M[nerd->linha][nerd->coluna]=r->simbolo;
-					cout << "Robô jogou " << tecla << endl;
-					certo=true;
-					}
-			}
-	}
-	r->round++;
+	teclado(p, nerd);
+	p->round++;
 	nerd->turno++;
 	nerd->roda++;
 	apagar();
 	imprimir(nerd);
 	verificar_ganhador(nerd);
 }
-void teclado(char tecla, game *nerd){
-	if ((tecla=='1') || (tecla=='2') || (tecla=='3') || (tecla=='4') || (tecla=='5') || (tecla=='6') || (tecla=='7') || (tecla=='8') || (tecla=='9'))
-	{switch (tecla){
+if(p->human==false){ROBO(p, nerd);}
+if(nerd->vitoria==true){
+cout << "Parabéns! "<<p->name<<" ganhou! "<< endl;
+p->score++;}
+}
+void ROBO(player *p, game *nerd){
+bool certo=false;
+if (p->round==1){teclado(p, nerd);}//no primeiro turno, basta uma só jogada aleatória né!
+if (p->round==2){
+//algoritmo "IMPEDIR VITORIA DO ADVERSARIO":
+	for (int i=0; i<3; i++){
+	//linhas
+	if((certo==false)&&(nerd->M[i][0]==nerd->M[i][1])&&(nerd->M[i][0]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[i][2]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[i][1]==nerd->M[i][2])&&(nerd->M[i][1]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[i][0]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[i][0]==nerd->M[i][2])&&(nerd->M[i][0]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[i][1]=p->simbolo; certo=true; i=3;}
+	//colunas
+	if((certo==false)&&(nerd->M[0][i]==nerd->M[1][i])&&(nerd->M[0][i]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[2][i]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[1][i]==nerd->M[2][i])&&(nerd->M[1][i]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[0][i]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[0][i]==nerd->M[2][i])&&(nerd->M[0][i]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[1][i]=p->simbolo; certo=true; i=3;}
+	}
+	//diagonais
+	if((certo==false)&&(nerd->M[1][1]!=' ')&&(nerd->M[1][1]!=p->simbolo)){
+		if((certo==false)&&(nerd->M[0][0]==nerd->M[1][1])){nerd->M[2][2]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[2][2]==nerd->M[1][1])){nerd->M[0][0]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[2][0]==nerd->M[1][1])){nerd->M[0][2]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[0][2]==nerd->M[1][1])){nerd->M[2][0]=p->simbolo; certo=true;}
+	}
+teclado(p, nerd);
+}
+
+if ((p->round==3)||(p->round==4)){
+	//primeiro robô analiza se tem 2 marcadas por ele proprio e tenta GANHAR.
+	for (int i=0; i<3; i++){
+	//linhas
+	if((certo==false)&&(nerd->M[i][0]==p->simbolo)&&(nerd->M[i][1]==p->simbolo)){nerd->M[i][2]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[i][1]==p->simbolo)&&(nerd->M[i][2]==p->simbolo)){nerd->M[i][0]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[i][0]==p->simbolo)&&(nerd->M[i][2]==p->simbolo)){nerd->M[i][1]=p->simbolo; certo=true; i=3;}
+	//colunas
+	if((certo==false)&&(nerd->M[0][i]==p->simbolo)&&(nerd->M[1][i]==p->simbolo)){nerd->M[2][i]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[1][i]==p->simbolo)&&(nerd->M[2][i]==p->simbolo)){nerd->M[0][i]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[2][i]==p->simbolo)&&(nerd->M[0][i]==p->simbolo)){nerd->M[1][i]=p->simbolo; certo=true; i=3;}
+	}
+	//diagonais
+	if((certo==false)&&(nerd->M[1][1]==p->simbolo)){
+		if((certo==false)&&(nerd->M[0][0]==p->simbolo)){nerd->M[2][2]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[2][2]==p->simbolo)){nerd->M[0][0]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[2][0]==p->simbolo)){nerd->M[0][2]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[0][2]==p->simbolo)){nerd->M[2][0]=p->simbolo; certo=true;}
+	}
+	//depois, ele vai tentar o impedimento da vitoria do adversario.
+	for (int i=0; i<3; i++){
+	//linhas
+	if((certo==false)&&(nerd->M[i][0]==nerd->M[i][1])&&(nerd->M[i][0]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[i][2]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[i][1]==nerd->M[i][2])&&(nerd->M[i][1]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[i][0]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[i][0]==nerd->M[i][2])&&(nerd->M[i][0]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[i][1]=p->simbolo; certo=true; i=3;}
+	//colunas
+	if((certo==false)&&(nerd->M[0][i]==nerd->M[1][i])&&(nerd->M[0][i]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[2][i]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[1][i]==nerd->M[2][i])&&(nerd->M[1][i]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[0][i]=p->simbolo; certo=true; i=3;}
+	if((certo==false)&&(nerd->M[0][i]==nerd->M[2][i])&&(nerd->M[0][i]!=' ')&&(nerd->M[i][0]!=p->simbolo)){nerd->M[1][i]=p->simbolo; certo=true; i=3;}
+	}
+	//diagonais
+	if((certo==false)&&(nerd->M[1][1]!=' ')&&(nerd->M[1][1]!=p->simbolo)){
+		if((certo==false)&&(nerd->M[0][0]==nerd->M[1][1])){nerd->M[2][2]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[2][2]==nerd->M[1][1])){nerd->M[0][0]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[2][0]==nerd->M[1][1])){nerd->M[0][2]=p->simbolo; certo=true;}
+		if((certo==false)&&(nerd->M[0][2]==nerd->M[1][1])){nerd->M[2][0]=p->simbolo; certo=true;}
+	}
+//se não achou nada, chama o teclado.{teclado(p, nerd);
+	teclado(p, nerd);
+}
+
+if(p->round==5){
+	for (int i=0; i<3; i++){for (int j=0; j<3; j++){ //loop duplicado para percorrer a martriz.
+	if(nerd->M[i][j]==' '){nerd->M[i][j]=p->simbolo; certo=true;}}}
+}
+
+//FInalization DESSE ROBOZITO LOKO
+	cout << "Robô pensa...\n";
+	p->round++; nerd->turno++; nerd->roda++;
+	apagar();
+	imprimir(nerd);
+	verificar_ganhador(nerd);
+}
+void teclado(player *p, game *nerd){
+int linha, coluna;
+char tecla;
+if (p->human==true)cin >> tecla;
+else{
+srand(time(NULL));
+int random = (rand()%9+49);
+tecla=(char)random;
+cout << "...Robô pensa em: " << tecla;
+}
+switch (tecla){
+		default:
+		if (p->human==true)cout << "Tecla invalida.";
+		teclado(p, nerd);
 		case '1':
-		nerd->linha=0;
-		nerd->coluna=0;
+		linha=0;
+		coluna=0;
 		break;
 		case '2':
-		nerd->linha=0;
-		nerd->coluna=1;
+		linha=0;
+		coluna=1;
 		break;
 		case '3':
-		nerd->linha=0;
-		nerd->coluna=2;
+		linha=0;
+		coluna=2;
 		break;
 		case '4':
-		nerd->linha=1;
-		nerd->coluna=0;
+		linha=1;
+		coluna=0;
 		break;
 		case '5':
-		nerd->linha=1;
-		nerd->coluna=1;
+		linha=1;
+		coluna=1;
 		break;
 		case '6':
-		nerd->linha=1;
-		nerd->coluna=2;
+		linha=1;
+		coluna=2;
 		break;
 		case '7':
-		nerd->linha=2;
-		nerd->coluna=0;
+		linha=2;
+		coluna=0;
 		break;
 		case '8':
-		nerd->linha=2;
-		nerd->coluna=1;
+		linha=2;
+		coluna=1;
 		break;
 		case '9':
-		nerd->linha=2;
-		nerd->coluna=2;
+		linha=2;
+		coluna=2;
 		break;
 		}
-	}
-	else
-	{cout << "Tecla invalida.";
-		cin >> tecla;
-		teclado(tecla, nerd);
-	}
+if(nerd->M[linha][coluna]==' '){nerd->M[linha][coluna]=p->simbolo;}
+else{cout << "Casa ocupada, jogada inválida./n"; teclado(p, nerd);}
 }
 void definir_jogadores(player *X, player *O){
 cout << "Primeiro vamos definir que sao os jogadores...\n";
@@ -214,10 +248,10 @@ else{
 	cout << "Escolha um simbolo para o jogador 1. (Padrao X): ";
 	X->simbolo='X';
 	cin >> X->simbolo;
-	if (X->simbolo=='\n')X->simbolo='X';
-	if (X->simbolo==' ')X->simbolo='X';
-	if (X->simbolo=='O')X->simbolo='X';
-	if (X->simbolo=='o')X->simbolo='X';
+	if (X->simbolo=='\0'){X->simbolo='X'; cout <<"Símbolo padrão inserido\n";}
+	if (X->simbolo==' '){X->simbolo='X'; cout <<"Símbolo padrão inserido\n";}
+	if (X->simbolo=='O'){X->simbolo='X'; cout <<"Símbolo padrão inserido\n";}
+	if (X->simbolo=='o'){X->simbolo='X'; cout <<"Símbolo padrão inserido\n";}
 	}
 cout << "Digite o nome do jogador 2.\n(Escreva ROBO quiser que o computador controle este jogador): ";
 cin >> O->name;
@@ -241,11 +275,11 @@ else{
 	cout << "Escolha um simbolo para o jogador 2. (Padrao O): ";
 	O->simbolo='O';
 	cin >> O->simbolo;
-	if (O->simbolo=='\n')O->simbolo='O';
-	if (O->simbolo==' ')O->simbolo='O';
-	if (O->simbolo=='X')O->simbolo='O';
-	if (O->simbolo=='x')O->simbolo='O';
-	if (O->simbolo==X->simbolo)O->simbolo = 'O';
+	if (O->simbolo=='\0'){O->simbolo='O'; cout <<"Símbolo padrão inserido\n";}
+	if (O->simbolo==' '){O->simbolo='O'; cout <<"Símbolo padrão inserido\n";}
+	if (O->simbolo=='X'){O->simbolo='O'; cout <<"Símbolo padrão inserido\n";}
+	if (O->simbolo=='x'){O->simbolo='O'; cout <<"Símbolo padrão inserido\n";}
+	if (O->simbolo==X->simbolo){O->simbolo = 'O'; cout <<"Símbolo padrão inserido\n";}
 	}
 	cout << endl;
 	cout << "Jogador 1 sera: " << X->name << ", jogando com o simbolo '" << X->simbolo << "'.\n";
@@ -378,7 +412,6 @@ void verificar_ganhador(game *nerd){
 		nerd->vitoria=true;}
 	if ((nerd->M[0][2]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[2][0]) && (nerd->M[0][2]!=' ')){
 		nerd->vitoria=true;}
-
 }
 void placar(player *X, player *O, game *nerd){
 	cout << endl;
