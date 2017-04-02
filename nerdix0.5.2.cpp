@@ -49,9 +49,9 @@ int main(){
 	jogo_da_velha(&X, &O, &nerd);
 	replay(&X, &O, &nerd);
 	cout << "\nTCHAU! :-)";
-	cout << "***Software desenvolvido por: barbolux && reymc && hugotones\n";
-	cout << "***Versão 0.5 beta \n";
-	cout << "***Atualizado: 29/03/2017 \n";
+	cout << "***Software desenvolvido por: barbolux && hugotones && reymc\n";
+	cout << "***Versão 0.5.2 beta \n";
+	cout << "***Atualizado: 02/04/2017 \n";
 	cout << "\nVolte sempre para incrementar seus RECORDES! :-)";
 	X.draw=nerd.velha;
 	O.draw=nerd.velha;
@@ -412,8 +412,8 @@ void replay(player *X, player *O, game *nerd){
 }
 void intro(){
 cout << "	.___________________.\n";
-cout << "	|NERDIX |0.5|     29|\n";
-cout << "	|E      |   |  março|\n";
+cout << "	|NERDIX 0.5.2     02|\n";
+cout << "	|E      |   |  abril|\n";
 cout << "	|R      |   |   2017|\n";
 cout << "	|D      |   |       |\n";
 cout << "	|I------|---|-------|\n";
