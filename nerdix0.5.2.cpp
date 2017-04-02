@@ -48,7 +48,7 @@ int main(){
 	cout << "Vamos brincar um pouquinho?\n";
 	jogo_da_velha(&X, &O, &nerd);
 	replay(&X, &O, &nerd);
-	cout << "\nTCHAU! :-)";
+	cout << "\nTCHAU! :-)\n";
 	cout << "***Software desenvolvido por: barbolux && hugotones && reymc\n";
 	cout << "***Versão 0.5.2 beta \n";
 	cout << "***Atualizado: 02/04/2017 \n";
