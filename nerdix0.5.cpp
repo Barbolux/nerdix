@@ -1,24 +1,32 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <locale.h>
+#include <iostream>//biblioteca padrao
+#include <cstdlib>//funciona o rand
+#include <ctime>//funciona o srand
+#include <clocale>//padrao portugues
 using namespace std;
-struct player{
-	string name;
-	bool human;
-	char simbolo;
+setlocale(LC_ALL, "Portuguese");//padrao PT(13) para lingua
+struct player{ //sera criada o player X e player O; 
+	string name; //recebe o nome do jogador
+	bool human; // se for falso entra no modo robo
+	char simbolo;//escolha de simbolo p. marcar
 	int round, draw, score;
+	//round=incremento a cada jogada, draw=incremento a cada empate, score=recebe incremento a cada vitoria
 };
-struct game{
-	char M[3][3];
+struct game{//utilizada so uma vez que guarda todos esses parametros abaixo (game nerd;)
+	char M[3][3];//matriz principal
 	int linha, coluna, velha, roda, turno, partida;
+	//linha & coluna = utilizado nas funcoes teclado & jogar;
+	//velha=recebe o incremento a cada empate do jogo (desde instalado);
+	//roda=recebe o incremento todos os turnos, para quando finalizar uma partida trocar quem comeca;
+	//turno=vai de 0 a 9, e os loops principais utilizam essa variavel;
+	//partida=recebe o incremento toda vez que termina uma partida;
 	bool vitoria, VELHA;
+	//ambas sao utilizadas pela funcao verificar jogador;
 };
-
-void intro();
-void apagar();
-void definir_jogadores(player*, player*);
-void verificar_ganhador(game*);
+//VOLTAR AQUI >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+void intro();//animacao de abertura;
+void apagar();//solta uma porrada de cout`s vazios
+void definir_jogadores(player*, player*);//e isso ai, recebe duas structs como parametro
+void verificar_ganhador(game*);//struct
 void imprimir(game*);
 void teclado(char, game*);
 void JOGAR(player*, game*);
@@ -28,9 +36,9 @@ void placar(player*, player*, game*);
 void replay(player *, player *, game*);
 	
 int main(){
-	setlocale(LC_ALL, "Portuguese");
-	player X, O;
-	game nerd;
+	
+	player X, O;// variaveis utilizadas em todo o programa
+	game nerd;//tambem sao utilizadas em todo o programa
 	X.round=1;
 	O.round=1;
 	X.score=0;
@@ -41,12 +49,13 @@ int main(){
 	nerd.roda=1;
 	nerd.turno=1;
 	nerd.partida=1;
-	intro();
+	//valores inicializados com valores inteiros;
+	intro();//animacao
 	cout << "\nBem vindo ao NERDIX, o jogo-da-velha mais nerd do mundo!\n";
-	definir_jogadores(&X, &O);
-	cout << "Vamos brincar um pouquinho?\n";
-	jogo_da_velha(&X, &O, &nerd);
-	replay(&X, &O, &nerd);
+	definir_jogadores(&X, &O);//pega o endereco das variaveis X e O, que serao manipulados nas funcoes;
+	cout << "Vamos brincar um pouquinho?\n";//convite
+	jogo_da_velha(&X, &O, &nerd);//com esses enderecos manipula os valores que estao neles.
+	replay(&X, &O, &nerd);//para comecar de novo
 	cout << "\nTCHAU! :-)";
 	cout << "***Software desenvolvido por: barbolux && reymc && hugozvanini\n";
 	cout << "***Versão 0.5 beta \n";
@@ -54,14 +63,14 @@ int main(){
 	cout << "\nVolte sempre para incrementar seus RECORDES! :-)";
 	return 0;
 }
-void jogo_da_velha(player *X, player *O, game *nerd){
+void jogo_da_velha(player *X, player *O, game *nerd){ //no replay e chamada outra vez
 	apagar();
-	X->round=1;
+	X->round=1;//no player X, vai ser iniciado com 1 o round;
 	O->round=1;
 	nerd->turno=1;
 	nerd->vitoria=false;
 	nerd->VELHA=false;
-	for (int i=0; i<3; i++){
+	for (int i=0; i<3; i++){//inicializou tudo em negro nosso tabuleiro;
 		for (int j=0; j<3; j++){nerd->M[i][j]= ' ';}}
 	if (X->human==false && O->human==false){
 	cout << "O computador venceu de si mesmo 100000 vezes em um segundo!\n";
@@ -75,25 +84,25 @@ void jogo_da_velha(player *X, player *O, game *nerd){
 	cout << "Que comece a disputa!" << endl;
 	imprimir(nerd);
 	while((nerd->turno<=9)&&(nerd->vitoria==false)){
-		if(nerd->roda%2==1)JOGAR(X, nerd);
+		if(nerd->roda%2==1)JOGAR(X, nerd);//alternancia entre os jogadores de cada turno
 		else JOGAR(O, nerd);
 	}
 	cout << "FIM DA PARTIDA.\n";
 	placar(X,O,nerd);
 }
 void JOGAR(player *p, game *nerd){
-if(nerd->VELHA==true)cout << "A VELHA ganhou :-P";
+if(nerd->VELHA==true)cout << "A VELHA ganhou :-P";//
 if(p->human==true){
 	cout << "Para jogar usa as teclas^^^ acima.\n";
 	cout << "Vez de " << p->name <<"("<<p->simbolo<<") jogar. " << p->round <<"o Turno."<<endl;
-	bool certo=false;
-	while (certo==false)
+	bool certo=false; // verificacao se a casa a ser marcada esta vazia;
+	while (certo==false)//
 	{
 		char tecla;
 		cin >> tecla;
-		teclado(tecla, nerd);
+		teclado(tecla, nerd);//transpoe a tecla apertada para matriz
 		if(nerd->M[nerd->linha][nerd->coluna]==' '){
-			nerd->M[nerd->linha][nerd->coluna]=p->simbolo;
+			nerd->M[nerd->linha][nerd->coluna]=p->simbolo;// se estiver em branco coloca-se o simbolo no tabuleiro
 			p->round++;
 			nerd->turno++;
 			nerd->roda++;
@@ -101,7 +110,7 @@ if(p->human==true){
 			imprimir(nerd);
 			verificar_ganhador(nerd);
 			certo=true;
-			}
+			}//acontecem todas as operacoes
 		else {cout << "Jogada inválida! ";}
 	}
 }
@@ -188,7 +197,7 @@ void teclado(char tecla, game *nerd){
 		nerd->linha=2;
 		nerd->coluna=2;
 		break;
-		}
+		}//COLOCAR Defaul<<<<<<<<<<
 	}
 	else
 	{cout << "Tecla invalida.";
@@ -196,7 +205,7 @@ void teclado(char tecla, game *nerd){
 		teclado(tecla, nerd);
 	}
 }
-void definir_jogadores(player *X, player *O){
+void definir_jogadores(player *X, player *O){//definir o nome dos jogadores e simbolo
 cout << "Primeiro vamos definir que sao os jogadores...\n";
 cout << endl;
 cout << "Digite o nome do jogador 1\n(Escreva ROBO quiser que o computador controle este jogador): ";
@@ -243,7 +252,7 @@ else{
 	if (O->simbolo=='X')O->simbolo='O';
 	if (O->simbolo=='x')O->simbolo='O';
 	if (O->simbolo==X->simbolo)O->simbolo = 'O';
-	}
+	}//colocar um cout dizendo que foi mudado para o padrao
 	cout << endl;
 	cout << "Jogador 1 sera: " << X->name << ", jogando com o simbolo '" << X->simbolo << "'.\n";
 	cout << "Jogador 2 sera: " << O->name << ", jogando com o simbolo '" << O->simbolo << "'.\n" << endl;
