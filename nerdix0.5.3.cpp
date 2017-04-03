@@ -1,6 +1,7 @@
 #include <iostream>//biblioteca padrão.
 #include <cstdlib>//biblioteca para o rand()
 #include <ctime>//biblioteca para o srand()
+#include <fstream>
 using namespace std;
 struct player{
 //Dentro da função main() serão criados dois players: X e O.
@@ -27,7 +28,6 @@ struct game{
 //*turno é incrementado todo final de turno de ambos jogadores,
 // mas é re-inicializado com valor 1 na função jogo_da_velha().
 // utilizamos para regular o loop de 1 a 9 que forma um jogo completo.
-	bool vitoria; //ela pode se tornar "true" na função verificar_jogador().
 };
 //FUNÇÕES DO PROGRAMA.
 void intro();//animação de abertura.
@@ -39,8 +39,8 @@ void jogo_da_velha(player*, player*, game*);//inicializa valores e contém um lo
 void JOGAR(player*, game*);//o jogador faz sua jogada.
 void ROBO(player*, game*);//o computador faz sua jogada.
 void teclado(player*, game*);//recebe o valor do teclado e manda p->simbolo para M[3][3].
-void verificar_ganhador(game*);//se houver um ganhador, a bool vitoria se torna true.
 void placar(player*, player*, game*);//mostra a pontuação.
+bool verificar_ganhador(game*);//se houver um ganhador, a bool vitoria se torna true.
 	
 int main(){
 	player X, O;
@@ -70,7 +70,6 @@ void jogo_da_velha(player *X, player *O, game *nerd){
 	X->round=1;
 	O->round=1;
 	nerd->turno=1;
-	nerd->vitoria=false;
 	for (int i=0; i<3; i++){
 		for (int j=0; j<3; j++){nerd->M[i][j]=' ';}}
 	if (X->human==false && O->human==false){
@@ -84,7 +83,7 @@ void jogo_da_velha(player *X, player *O, game *nerd){
 	}
 	cout << "Que comece a disputa!" << endl;
 	imprimir(nerd);
-	while((nerd->turno<=9)&&(nerd->vitoria==false)){
+	while((nerd->turno<=9)&&(verificar_ganhador(nerd)==false)){
 		if(nerd->roda%2==1)JOGAR(X, nerd);
 		else JOGAR(O, nerd);
 	}
@@ -101,13 +100,12 @@ if(p->human==true){
 	nerd->roda++;
 	apagar();
 	imprimir(nerd);
-	verificar_ganhador(nerd);
 }
 if(p->human==false){ROBO(p, nerd);}
-if(nerd->vitoria==true){
+if(verificar_ganhador(nerd)){
 cout << "Parabéns! "<<p->name<<" ganhou! "<< endl;
 p->score++;}
-if (nerd->vitoria==false && nerd->turno > 9){
+if ((verificar_ganhador(nerd)==false) && (nerd->turno > 9)){
 	cout << "A VELHA ganhou :-P\n";
 	nerd->velha++;
 }
@@ -189,7 +187,6 @@ if(p->round==5){
 	p->round++; nerd->turno++; nerd->roda++;
 	apagar();
 	imprimir(nerd);
-	verificar_ganhador(nerd);
 }
 void teclado(player *p, game *nerd){
 bool certo;
@@ -373,25 +370,27 @@ void imprimir(game *nerd){
 	cout << ")  |"<<endl;
 	cout << "|________________|______________|\n";}
 }
-void verificar_ganhador(game *nerd){
+bool verificar_ganhador(game *nerd){
+	bool vitoria=false;
 	if ((nerd->M[0][0]==nerd->M[0][1])&& (nerd->M[0][1]==nerd->M[0][2]) && (nerd->M[0][0]!=' ')){
-		nerd->vitoria=true;}
+		vitoria=true;}
 	if ((nerd->M[1][0]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[1][2]) && (nerd->M[1][0]!=' ')){
-		nerd->vitoria=true;}
+		vitoria=true;}
 	if ((nerd->M[2][0]==nerd->M[2][1])&& (nerd->M[2][1]==nerd->M[2][2]) && (nerd->M[2][0]!=' ')){
-		nerd->vitoria=true;}
+		vitoria=true;}
 	
 	if ((nerd->M[0][0]==nerd->M[1][0])&& (nerd->M[1][0]==nerd->M[2][0]) && (nerd->M[0][0]!=' ')){
-		nerd->vitoria=true;}
+		vitoria=true;}
 	if ((nerd->M[0][1]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[2][1]) && (nerd->M[0][1]!=' ')){
-		nerd->vitoria=true;}
+		vitoria=true;}
 	if ((nerd->M[0][2]==nerd->M[1][2])&& (nerd->M[1][2]==nerd->M[2][2]) && (nerd->M[0][2]!=' ')){
-		nerd->vitoria=true;}
+		vitoria=true;}
 	
 	if ((nerd->M[0][0]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[2][2]) && (nerd->M[0][0]!=' ')){
-		nerd->vitoria=true;}
+		vitoria=true;}
 	if ((nerd->M[0][2]==nerd->M[1][1])&& (nerd->M[1][1]==nerd->M[2][0]) && (nerd->M[0][2]!=' ')){
-		nerd->vitoria=true;}
+		vitoria=true;}
+return vitoria;
 }
 void placar(player *X, player *O, game *nerd){
 	cout << endl;
