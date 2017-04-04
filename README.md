@@ -8,13 +8,13 @@ Alunos da UFOP - Universidade Federal de Ouro Preto (DECOM - Departamento de com
 
 ## ESTE CÓDIGO ENCONTRA-SE NA VERSÃO 0.5 (beta)
 Para baixar o código fonte clique abaixo:
-https://github.com/Barbolux/nerdix/blob/nerdix0.5.cpp
+https://github.com/Barbolux/nerdix/blob/nerdix0.5.4.cpp
 
 Já imaginou jogar colorido? (experimental, às vezes funciona em Linux e Mac).
-https://github.com/Barbolux/nerdix/blob/master/dev/nerdix_colorido/nerdix5_ansi.cpp
+https://github.com/Barbolux/nerdix/blob/master/dev/nerdix_colorido/nerdix54_ansi.cpp
 
 
 
-quarta/29 de março/2017
+terça/04 de abril/2017
 ### Está em dúvida com os ponteiros?
 Boa referência para estudar ponteiros: http://www.tiexpert.net/programacao/c/ponteiros.php
