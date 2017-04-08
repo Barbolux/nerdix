@@ -36,6 +36,8 @@ http://www.bromeon.ch/libraries/thor/
 #### Simple DirectMedia Layer:
 http://www.libsdl.org/
 
+http://lazyfoo.net/tutorials/SDL/01_hello_SDL/index.php (Hello SDL)
+
 #### Allegro:
 http://liballeg.org/
 
