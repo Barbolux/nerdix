@@ -40,7 +40,7 @@ http://www.libsdl.org/
 http://liballeg.org/
 
 ##### gráficos mais avançados:
-www.glfw.org/
+https://www.glfw.org/
 
 https://www.opengl.org/
 
