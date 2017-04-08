@@ -39,12 +39,12 @@ http://www.libsdl.org/
 #### Allegro:
 http://liballeg.org/
 
-##### avançado:
+##### gráficos mais avançados:
 www.glfw.org/
 
 https://www.opengl.org/
 
-#### GNU para Windows:
+##### GNU para Windows?
 https://www.cygwin.com/
 
 http://www.mingw.org/
