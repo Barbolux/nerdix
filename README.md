@@ -8,9 +8,11 @@ Alunos da UFOP - Universidade Federal de Ouro Preto (DECOM - Departamento de com
 
 ## ESTE CÓDIGO ENCONTRA-SE NA VERSÃO 0.6 (beta)
 Para baixar o código fonte clique abaixo:
+
 https://github.com/Barbolux/nerdix/blob/master/nerdix0.6.1.cpp
 
 Já imaginou jogar colorido? (experimental, às vezes funciona em Linux e Mac).
+
 https://github.com/Barbolux/nerdix/blob/master/dev/nerdix_colorido/nerdix54_ansi.cpp
 
 
