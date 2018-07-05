@@ -9,6 +9,9 @@ var t {i in I}; # variável que determina a data de início da produção da tar
 var h1 {i in I}; # variável que determina o tempo de antecipação da tarefa i;
 var h2 {i in I}; # variável que determina o tempo de atraso da tarefa i;
 
+# criar matriz?
+# param matriz{i in I, i in I};
+
 minimize custo: sum {i in I} E1[i] * h1[i] + sum {i in I} E2[i] * h2[i];
 
 s.t.
@@ -16,6 +19,10 @@ s.t.
 tempos{i in I, j in I}: t[j]-t[i] - ( 99999 + S[i,j]) >=  P[i] - 99999;
 fila {i in I, j in I}: Y[i, j] + Y[j, i] = 1;
 antecipacao_atraso {i in I}: t[i] + P[i] - h2[i] + h1[i] = T[i];
+
+#ou
+#tempos{i in I, j in I}: t[j]-t[i] - ( 99999 + S[i,j]) >=  P[i] - 99999;
+#como indicar somatoria aqui? e usar a matriz?
 
 # como indicar se Y={0,1} é binário ?
 
